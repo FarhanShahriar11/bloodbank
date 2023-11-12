@@ -1,0 +1,117 @@
+{% extends 'base.html' %}{% block base %}
+<!-- component -->
+<div class="h-full min-h-screen flex flex-col items-center justify-center">
+    <!-- component -->
+    <div class="max-w-2xl mx-auto">
+        <div class="flex flex-col items-center mt-[10vh]">
+            <h2 class="mb-5 text-gray-900 font-mono font-bold text-3xl">
+                Sign Up
+            </h2>
+            <form method="POST" class="md:grid md:grid-cols-2 md:gap-4 text-sm">
+                {% csrf_token %}
+                <input
+                    type="text"
+                    class="w-full text-sm px-4 py-2 mb-2 border border-slate-600 rounded-lg font-medium"
+                    placeholder="First Name"
+                    name="first_name"
+                    pattern="[a-zA-Z -.]{3,}"
+                    title="Enter a valid name"
+                    value="{{request.POST.first_name}}"
+                    required
+                />
+                <input
+                    type="text"
+                    class="w-full text-sm px-4 py-2 mb-2 border border-slate-600 rounded-lg font-medium"
+                    placeholder="Last Name"
+                    name="last_name"
+                    pattern="[a-zA-Z -.]{3,}"
+                    title="Enter a valid name"
+                    value="{{request.POST.last_name}}"
+                />
+
+                <select
+                    type="text"
+                    class="w-full text-sm px-4 py-2 mb-2 border border-slate-600 rounded-lg font-medium"
+                    name="group"
+                    value="{{request.POST.group}}"
+                >
+                    <option value="">Select Blood Group</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+                <input
+                    type="date"
+                    class="w-full text-sm px-4 py-2 mb-2 border border-slate-600 rounded-lg font-medium"
+                    placeholder="Last Donated On"
+                    name="last_donated"
+                    value="{{request.POST.last_donated|date:'Y-m-d'}}"
+                />
+                <input
+                    type="text"
+                    class="w-full text-sm px-4 py-2 mb-2 border border-slate-600 rounded-lg font-medium"
+                    placeholder="Mobile Number"
+                    name="mobile"
+                    pattern="01[3-9]{1}[0-9]{8}"
+                    title="Enter a valid mobile number"
+                    value="{{request.POST.mobile}}"
+                />
+                <input
+                    type="email"
+                    class="w-full text-sm px-4 py-2 mb-2 border border-slate-600 rounded-lg font-medium"
+                    placeholder="Email"
+                    name="email"
+                    pattern="[a-z0-9._%+-]{3,}@[a-z0-9.-]{3,}.[a-z]{2,}"
+                    title="Enter a valid email"
+                    value="{{request.POST.email}}"
+                    required
+                />
+
+                <input
+                    type="password"
+                    class="w-full text-sm px-4 py-2 mb-2 border border-slate-600 rounded-lg font-medium"
+                    placeholder="Password"
+                    pattern=".{6,}"
+                    title="Enter a valid password"
+                    name="password"
+                    required
+                />
+                <input
+                    type="password"
+                    class="w-full text-sm px-4 py-2 mb-2 border border-slate-600 rounded-lg font-medium"
+                    placeholder="Confirm password"
+                    pattern=".{6,}"
+                    title="Enter password again"
+                    name="confirm-password"
+                    required
+                />
+                {% if messages %} {% for message in messages %}
+                <div class="col-span-2 mb-2 text-red-500 font-bold text-xs">
+                    {{message}}
+                </div>
+                {% endfor %} {% endif %}
+                <button
+                    type="submit"
+                    class="col-span-2 text0sm bg-slate-500 hover:bg-slate-700 text-white text-base rounded-lg py-2.5 px-5 transition-colors w-full text-[19px]"
+                >
+                    Create Account
+                </button>
+            </form>
+            <p class="text-center mt-3 text-[14px]">
+                Already have an account?
+                <a href="{% url 'login' %}" class="text-gray-600">Log In</a>
+            </p>
+            <p class="text-center mt-3 text-[14px]">
+                By clicking continue, you agree to our
+                <a href="#" class="text-gray-600">Terms of Service</a> and
+                <a href="#" class="text-gray-600">Privacy Policy</a>.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,252 @@
+{% extends 'staff/base.html' %}{% block staff %}
+<form method="POST" class="w-full max-w-3xl mx-auto">
+    {% csrf_token %}
+    <div class="">
+        <div>
+            <div>
+                <a href="{% url 'staff_request_list' %}" class="text-md flex items-center justify-start font-bold text-gray-900">
+                    <i class="w-8 h-8 flex items-center justify-center fa-solid fa-arrow-left"></i>View All Requests
+                </a>
+            <div>
+                <h3 class="mt-6 text-3xl leading-6 font-bold text-gray-900">
+                    {{req.group}} Blood Request For {{ req.patient_name }}
+                </h3>
+            </div>
+
+            <div class="mt-12 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                <div class="sm:col-span-3">
+                    <label
+                        for="patient-name"
+                        class="block text-sm font-medium text-gray-700"
+                    >
+                        Patient' Name
+                    </label>
+                    <div class="mt-1">
+                        <input
+                            type="text"
+                            name="patient-name"
+                            id="patient-name"
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            placeholder="Patient's Name"
+                            value="{{req.patient_name}}"
+                        />
+                    </div>
+                </div>
+                <div class="sm:col-span-3">
+                    <label
+                        for="patient-age"
+                        class="block text-sm font-medium text-gray-700"
+                    >
+                        Patient's Age
+                    </label>
+                    <div class="mt-1">
+                        <input
+                            type="text"
+                            name="patient-age"
+                            id="patient-age"
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            placeholder="Patient's Age"
+                            value="{{req.patient_age}}"
+                        />
+                    </div>
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label
+                        for="group"
+                        class="block text-sm font-medium text-gray-700"
+                    >
+                        Blood Group
+                    </label>
+                    <div class="mt-1">
+                        <select
+                            id="group"
+                            name="group"
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                        >
+                            <option value="">
+                                Select Patient's Blood Group
+                            </option>
+                            <option value="A+" {% if req.group == 'A+' %}selected{% endif %}>A+</option>
+                            <option value="A-" {% if req.group == 'A-' %}selected{% endif %}>A-</option>
+                            <option value="B+" {% if req.group == 'B+' %}selected{% endif %}>B+</option>
+                            <option value="B-" {% if req.group == 'B-' %}selected{% endif %}>B-</option>
+                            <option value="AB+" {% if req.group == 'AB+' %}selected{% endif %}>AB+</option>
+                            <option value="AB-" {% if req.group == 'AB-' %}selected{% endif %}>AB-</option>
+                            <option value="O+" {% if req.group == 'O+' %}selected{% endif %}>O+</option>
+                            <option value="O-" {% if req.group == 'O-' %}selected{% endif %}>O-</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="sm:col-span-2">
+                    <label
+                        for="units-required"
+                        class="block text-sm font-medium text-gray-700"
+                    >
+                        Units Required
+                    </label>
+                    <div class="mt-1">
+                        <input
+                            id="units-required"
+                            name="units-required"
+                            type="number"
+                            min="1"
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            value="{{req.units_required}}"
+                        />
+                    </div>
+                </div>
+                <div class="sm:col-span-2">
+                    <label
+                        for="units-required"
+                        class="block text-sm font-medium text-gray-700"
+                    >
+                        Units Received
+                    </label>
+                    <div class="mt-1">
+                        <input
+                            id="units-received"
+                            name="units-received"
+                            type="number"
+                            min="0"
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            value="{{req.units_received}}"
+                        />
+                    </div>
+                </div>
+                
+                <div class="sm:col-span-6">
+                    <label
+                        for="patient-name"
+                        class="block text-sm font-medium text-gray-700"
+                    >
+                        Hospital Name & Address
+                    </label>
+                    <div class="mt-1">
+                        <input
+                            type="text"
+                            name="hospital"
+                            id="hospital"
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            placeholder="Hospital Name & Address"
+                            value="{{req.hospital}}"
+                        />
+                    </div>
+                </div>
+                <div class="sm:col-span-6">
+                    <label
+                        for="about"
+                        class="block text-sm font-medium text-gray-700"
+                    >
+                        What happened to the patient?
+                    </label>
+                    <div class="mt-1">
+                        <textarea
+                            id="reason"
+                            name="reason"
+                            rows="3"
+                            placeholder="Write the reason for the blood request here in brief."
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"
+                        >{{req.reason}}</textarea>
+                    </div>
+                </div>
+
+                  <div class="sm:col-span-3">
+                    <label
+                        for="datetime"
+                        class="block text-sm font-medium text-gray-700"
+                    >
+                        When do you need blood?
+                    </label>
+                    <div class="mt-1">
+                        <input
+                            type="datetime-local"
+                            name="datetime"
+                            id="datetime"
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            placeholder="Date & Time"
+                            value="{{req.date_time|date:'Y-m-d\TH:i'}}"
+                        />
+                    </div>
+                </div>
+                <div class="sm:col-span-3">
+                    <span class="ml-3" id="annual-billing-label">
+                        <span class="text-sm font-medium text-gray-900"
+                            >Is this an emergency?
+                        </span>
+                    </span>
+                    <div class="mt-1 flex items-center">
+                        <label
+                            for="emergency"
+                            class="relative h-8 w-14 cursor-pointer [-webkit-tap-highlight-color:_transparent]"
+                        >
+                            <input
+                                type="checkbox"
+                                name="emergency"
+                                id="emergency"
+                                class="peer sr-only"
+                            />
+                            <script>
+                                function setEmergency(){
+                                    if ("{{req.emergency}}" == "True")
+                                        document.getElementById("emergency").checked = true;
+                                    else
+                                        document.getElementById("emergency").checked = false;
+                                }
+                                setEmergency();
+                            </script>
+                            <span
+                                class="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-red-500"
+                            ></span>
+
+                            <span
+                                class="absolute inset-y-0 start-0 m-1 h-6 w-6 rounded-full bg-white transition-all peer-checked:start-6"
+                            ></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="sm:col-span-6">
+                    <label
+                        for="group"
+                        class="block text-sm font-medium text-gray-700"
+                    >
+                        Donate from Stock
+                    </label>
+                    <div class="mt-1">
+                        <select
+                            id="stock"
+                            name="stock"
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                        >
+                            <option value="">
+                                Select Stock to Donate
+                            </option>
+                            {% for stock in stocks %}
+                            <option value="{{stock.id}}">#{{stock.id}}: {{stock}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pt-5">
+        <div class="flex justify-end">
+            <button
+                type="button"
+                class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+                Cancel
+            </button>
+            <button
+                type="submit"
+                class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+                Save
+            </button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
